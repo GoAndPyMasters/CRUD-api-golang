@@ -147,9 +147,13 @@ func main() {
 	r := mux.NewRouter()
 	// register the routes
 	r.HandleFunc("/movies", getMovies).Methods("GET")
+	// register the route for a single movie
 	r.HandleFunc("/movies/{id}", getMovie).Methods("GET")
+	// register the route for creating a new movie
 	r.HandleFunc("/movies", createMovie).Methods("POST")
+	// register the route for updating a movie
 	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
+	// register the route for deleting a movie
 	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
 	// start the server
 	fmt.Printf("String server started at port 8000")
