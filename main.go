@@ -115,17 +115,27 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 //
 // It does not return any value.
 func updateMovie(w http.ResponseWriter, r *http.Request) {
-
+	// set the content type to JSON
 	w.Header().Set("Content-Type", "application/json")
+	// params contains the ID of the movie to be updated and parsed from the URL or headers
 	params := mux.Vars(r)
+	// loop through the list of movies
 	for index, item := range movies {
+		// if the movie ID matches the ID in the URL, update the movie
 		if item.ID == params["id"] {
+			// get the updated movie from the request body
 			movies = append(movies[:index], movies[index+1:]...)
+			// decode the request body into the updated movie
 			var movie Movie
+			// decode the request body into the updated movie
 			_ = json.NewDecoder(r.Body).Decode(&movie)
+			// set the ID of the updated movie to the ID in the URL
 			movie.ID = params["id"]
+			// append the updated movie to the list of movies
 			movies = append(movies, movie)
+			// encode the updated movie into JSON format and send it back to the client
 			json.NewEncoder(w).Encode(movie)
+			// return from the function
 			return
 		}
 	}
